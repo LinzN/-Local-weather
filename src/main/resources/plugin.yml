@@ -1,0 +1,4 @@
+main: de.linzn.localWeather.LocalWeatherPlugin
+name: local-weather
+version: ${project.version}
+depend: []
