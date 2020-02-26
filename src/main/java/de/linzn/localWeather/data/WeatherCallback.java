@@ -11,11 +11,13 @@
 
 package de.linzn.localWeather.data;
 
+import de.azcore.azcoreRuntime.AppLogger;
 import de.azcore.azcoreRuntime.taskManagment.AbstractCallback;
 import de.azcore.azcoreRuntime.taskManagment.CallbackTime;
 import de.azcore.azcoreRuntime.taskManagment.operations.OperationRegister;
 import de.azcore.azcoreRuntime.taskManagment.operations.OperationSettings;
 import de.azcore.azcoreRuntime.taskManagment.operations.TaskOperation;
+import de.azcore.azcoreRuntime.utils.Color;
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.engine.WeatherEngine;
@@ -41,6 +43,7 @@ public class WeatherCallback extends AbstractCallback {
     public void callback(Object object) {
         JSONObject weatherObject = (JSONObject) object;
         weatherContainer = WeatherEngine.getWeatherByJSON(weatherObject);
+        AppLogger.debug(Color.GREEN + "Weather pull complete");
     }
 
     @Override
