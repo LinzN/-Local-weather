@@ -14,10 +14,8 @@ package de.linzn.localWeather;
 
 import de.azcore.azcoreRuntime.AZCoreRuntimeApp;
 import de.azcore.azcoreRuntime.modules.pluginModule.AZPlugin;
-import de.azcore.azcoreRuntime.taskManagment.operations.OperationRegister;
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
-import de.linzn.localWeather.data.WeatherOperation;
 import de.linzn.localWeather.engine.WeatherContainer;
 
 
@@ -36,7 +34,6 @@ public class LocalWeatherPlugin extends AZPlugin {
         this.getDefaultConfig().get("weather.apiKey", "xxxxxxxxxxxxxxxxx");
         this.getDefaultConfig().get("weather.defaultLocation", "Blieskastel");
         this.getDefaultConfig().save();
-        OperationRegister.addOperation("weather_current", WeatherOperation.wetter_current_operation);
         AZCoreRuntimeApp.getInstance().getCommandModule().registerCommand("weather", new WeatherCommand());
         AZCoreRuntimeApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
     }

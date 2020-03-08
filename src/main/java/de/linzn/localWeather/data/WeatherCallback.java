@@ -14,9 +14,7 @@ package de.linzn.localWeather.data;
 import de.azcore.azcoreRuntime.AppLogger;
 import de.azcore.azcoreRuntime.taskManagment.AbstractCallback;
 import de.azcore.azcoreRuntime.taskManagment.CallbackTime;
-import de.azcore.azcoreRuntime.taskManagment.operations.OperationRegister;
-import de.azcore.azcoreRuntime.taskManagment.operations.OperationSettings;
-import de.azcore.azcoreRuntime.taskManagment.operations.TaskOperation;
+import de.azcore.azcoreRuntime.taskManagment.operations.OperationOutput;
 import de.azcore.azcoreRuntime.utils.Color;
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
@@ -32,16 +30,15 @@ public class WeatherCallback extends AbstractCallback {
     @Override
     public void operation() {
         String location = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.defaultLocation");
-        OperationSettings operationSettings = new OperationSettings();
-        operationSettings.addSetting("weather.location", location);
-        TaskOperation taskOperation = OperationRegister.getOperation("weather_current");
-        addOperationData(taskOperation, operationSettings);
+        WeatherOperation weatherOperation = new WeatherOperation();
+        weatherOperation.setLocation(location);
+        addOperationData(weatherOperation);
 
     }
 
     @Override
-    public void callback(Object object) {
-        JSONObject weatherObject = (JSONObject) object;
+    public void callback(OperationOutput operationOutput) {
+        JSONObject weatherObject = (JSONObject) operationOutput.getData();
         weatherContainer = WeatherEngine.getWeatherByJSON(weatherObject);
         AppLogger.debug(Color.GREEN + "Weather pull complete");
     }

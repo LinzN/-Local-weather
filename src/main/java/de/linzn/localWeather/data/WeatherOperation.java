@@ -12,15 +12,29 @@
 package de.linzn.localWeather.data;
 
 
-import de.azcore.azcoreRuntime.taskManagment.operations.TaskOperation;
+import de.azcore.azcoreRuntime.taskManagment.operations.AbstractOperation;
+import de.azcore.azcoreRuntime.taskManagment.operations.OperationOutput;
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherEngine;
 
-public class WeatherOperation {
+public class WeatherOperation extends AbstractOperation {
+    private String location;
 
-    public static TaskOperation wetter_current_operation = object -> {
-        String location = object.getStringSetting("weather.location");
+    @Override
+    public OperationOutput runOperation() {
+        OperationOutput operationOutput = new OperationOutput(this);
         String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
-        return new WeatherEngine(key).parseWeather(location);
-    };
+        operationOutput.setData(new WeatherEngine(key).parseWeather(location));
+        operationOutput.setExit(0);
+        return operationOutput;
+    }
+
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }
