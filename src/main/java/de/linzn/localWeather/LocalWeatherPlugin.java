@@ -12,14 +12,15 @@
 package de.linzn.localWeather;
 
 
-import de.azcore.azcoreRuntime.AZCoreRuntimeApp;
-import de.azcore.azcoreRuntime.modules.pluginModule.AZPlugin;
+
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
 import de.linzn.localWeather.engine.WeatherContainer;
+import de.stem.stemSystem.STEMSystemApp;
+import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
 
 
-public class LocalWeatherPlugin extends AZPlugin {
+public class LocalWeatherPlugin extends STEMPlugin {
 
     public static LocalWeatherPlugin localWeatherPlugin;
     private WeatherCallback weatherCallback;
@@ -34,13 +35,13 @@ public class LocalWeatherPlugin extends AZPlugin {
         this.getDefaultConfig().get("weather.apiKey", "xxxxxxxxxxxxxxxxx");
         this.getDefaultConfig().get("weather.defaultLocation", "Blieskastel");
         this.getDefaultConfig().save();
-        AZCoreRuntimeApp.getInstance().getCommandModule().registerCommand("weather", new WeatherCommand());
-        AZCoreRuntimeApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
+        STEMSystemApp.getInstance().getCommandModule().registerCommand("weather", new WeatherCommand());
+        STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
     }
 
     @Override
     public void onDisable() {
-        AZCoreRuntimeApp.getInstance().getCommandModule().unregisterCommand("wetter");
+        STEMSystemApp.getInstance().getCommandModule().unregisterCommand("wetter");
     }
 
     public WeatherContainer getWeatherData() {

@@ -12,11 +12,12 @@
 package de.linzn.localWeather.data;
 
 
-import de.azcore.azcoreRuntime.AppLogger;
-import de.azcore.azcoreRuntime.modules.commandModule.ICommand;
+
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.engine.WeatherEngine;
+import de.stem.stemSystem.AppLogger;
+import de.stem.stemSystem.modules.commandModule.ICommand;
 
 public class WeatherCommand implements ICommand {
     @Override
