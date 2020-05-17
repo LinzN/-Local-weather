@@ -13,6 +13,7 @@ package de.linzn.localWeather;
 
 
 
+import de.linzn.localWeather.callbacks.SensorCallback;
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
 import de.linzn.localWeather.engine.WeatherContainer;
@@ -37,6 +38,8 @@ public class LocalWeatherPlugin extends STEMPlugin {
         this.getDefaultConfig().save();
         STEMSystemApp.getInstance().getCommandModule().registerCommand("weather", new WeatherCommand());
         STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
+        STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(new SensorCallback(), this);
+        STEMSystemApp.getInstance().getZSocketModule().getzServer().registerEvents(new DataListener());
     }
 
     @Override
