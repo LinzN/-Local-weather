@@ -22,13 +22,14 @@ import java.io.IOException;
 
 public class DataListener implements IListener {
 
+    public static JSONObject sensorData;
+
 
     @EventHandler(channel = "sensor_data")
     public void onData(ReceiveDataEvent event) {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getDataInBytes()));
         try {
-            JSONObject jsonObject = new JSONObject(in.readUTF());
-            System.out.println(jsonObject);
+            sensorData = new JSONObject(in.readUTF());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,10 @@
 
 package de.linzn.localWeather.engine;
 
+import de.linzn.localWeather.DataListener;
 import org.json.JSONObject;
+
+import java.text.NumberFormat;
 
 public class WeatherContainer {
 
@@ -31,6 +34,7 @@ public class WeatherContainer {
     private double clouds;
 
     private int weatherIcon;
+    private boolean sensorData;
 
 
     public WeatherContainer(JSONObject jsonObject) {
@@ -45,11 +49,21 @@ public class WeatherContainer {
         weatherMain = weatherObject.getString("main");
 
         JSONObject mainObject = jsonObject.getJSONObject("main");
-        temp = mainObject.getDouble("temp");
         temp_min = mainObject.getDouble("temp_min");
         temp_max = mainObject.getDouble("temp_max");
-        pressure = mainObject.getDouble("pressure");
-        humidity = mainObject.getDouble("humidity");
+
+        if(DataListener.sensorData != null){
+
+            temp = round(DataListener.sensorData.getDouble("temperature"), 2);
+            pressure = round(DataListener.sensorData.getDouble("pressure"), 2);
+            humidity = round(DataListener.sensorData.getDouble("humidity"), 2);
+            sensorData = true;
+        } else {
+            temp = mainObject.getDouble("temp");
+            pressure = mainObject.getDouble("pressure");
+            humidity = mainObject.getDouble("humidity");
+            sensorData = false;
+        }
 
         JSONObject windObject = jsonObject.getJSONObject("wind");
         wind_speed = windObject.getDouble("speed");
@@ -123,5 +137,14 @@ public class WeatherContainer {
 
     public String printData() {
         return "";
+    }
+
+    public boolean isSensorData() {
+        return sensorData;
+    }
+
+    private double round(double value, int decimalPoints) {
+        double d = Math.pow(10, decimalPoints);
+        return Math.round(value * d) / d;
     }
 }
