@@ -52,11 +52,13 @@ public class WeatherContainer {
         temp_min = mainObject.getDouble("temp_min");
         temp_max = mainObject.getDouble("temp_max");
 
-        if(DataListener.sensorData != null){
+        JSONObject jSONsensorData = DataListener.getSensorData();
 
-            temp = round(DataListener.sensorData.getDouble("temperature"), 2);
-            pressure = round(DataListener.sensorData.getDouble("pressure"), 2);
-            humidity = round(DataListener.sensorData.getDouble("humidity"), 2);
+        if(jSONsensorData != null){
+
+            temp = round(jSONsensorData.getDouble("temperature"), 2);
+            pressure = round(jSONsensorData.getDouble("pressure"), 2);
+            humidity = round(jSONsensorData.getDouble("humidity"), 2);
             sensorData = true;
         } else {
             temp = mainObject.getDouble("temp");

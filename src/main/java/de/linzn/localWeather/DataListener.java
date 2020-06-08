@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class DataListener implements IListener {
 
-    public static JSONObject sensorData;
+    private static JSONObject sensorData;
 
 
     @EventHandler(channel = "sensor_data")
@@ -34,5 +34,11 @@ public class DataListener implements IListener {
             e.printStackTrace();
         }
 
+    }
+
+    public static JSONObject getSensorData(){
+        JSONObject jsonObject = sensorData;
+        sensorData = null;
+        return jsonObject;
     }
 }
