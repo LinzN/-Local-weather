@@ -11,6 +11,7 @@
 
 package de.linzn.localWeather;
 
+import de.linzn.localWeather.dataObjects.SensorData;
 import de.linzn.zSocket.components.events.IListener;
 import de.linzn.zSocket.components.events.ReceiveDataEvent;
 import de.linzn.zSocket.components.events.handler.EventHandler;
@@ -22,23 +23,20 @@ import java.io.IOException;
 
 public class DataListener implements IListener {
 
-    private static JSONObject sensorData;
+    private static SensorData sensorData;
 
+    public static SensorData getSensorData() {
+        return sensorData;
+    }
 
     @EventHandler(channel = "sensor_data")
     public void onData(ReceiveDataEvent event) {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getDataInBytes()));
         try {
-            sensorData = new JSONObject(in.readUTF());
+            sensorData = new SensorData(new JSONObject(in.readUTF()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
-
-    public static JSONObject getSensorData(){
-        JSONObject jsonObject = sensorData;
-        sensorData = null;
-        return jsonObject;
     }
 }

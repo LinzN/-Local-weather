@@ -12,7 +12,6 @@
 package de.linzn.localWeather.data;
 
 
-
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.engine.WeatherEngine;

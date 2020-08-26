@@ -14,11 +14,12 @@ package de.linzn.localWeather.engine;
 import de.linzn.localWeather.DataListener;
 import org.json.JSONObject;
 
-import java.text.NumberFormat;
+import java.util.Date;
 
 public class WeatherContainer {
 
     private String location;
+    private Date date;
 
     private String weatherDescription;
     private String weatherMain;
@@ -34,7 +35,6 @@ public class WeatherContainer {
     private double clouds;
 
     private int weatherIcon;
-    private boolean sensorData;
 
 
     public WeatherContainer(JSONObject jsonObject) {
@@ -43,6 +43,7 @@ public class WeatherContainer {
 
     private void distribute(JSONObject jsonObject) {
         location = jsonObject.getString("name");
+        date = new Date();
 
         JSONObject weatherObject = jsonObject.getJSONArray("weather").getJSONObject(0);
         weatherDescription = weatherObject.getString("description");
@@ -51,21 +52,10 @@ public class WeatherContainer {
         JSONObject mainObject = jsonObject.getJSONObject("main");
         temp_min = mainObject.getDouble("temp_min");
         temp_max = mainObject.getDouble("temp_max");
+        temp = mainObject.getDouble("temp");
+        pressure = mainObject.getDouble("pressure");
+        humidity = mainObject.getDouble("humidity");
 
-        JSONObject jSONsensorData = DataListener.getSensorData();
-
-        if(jSONsensorData != null){
-
-            temp = round(jSONsensorData.getDouble("temperature"), 2);
-            pressure = round(jSONsensorData.getDouble("pressure"), 2);
-            humidity = round(jSONsensorData.getDouble("humidity"), 2);
-            sensorData = true;
-        } else {
-            temp = mainObject.getDouble("temp");
-            pressure = mainObject.getDouble("pressure");
-            humidity = mainObject.getDouble("humidity");
-            sensorData = false;
-        }
 
         JSONObject windObject = jsonObject.getJSONObject("wind");
         wind_speed = windObject.getDouble("speed");
@@ -94,6 +84,9 @@ public class WeatherContainer {
     }
 
     public String getLocation() {
+        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
+            return DataListener.getSensorData().getLocation();
+        }
         return location;
     }
 
@@ -106,6 +99,9 @@ public class WeatherContainer {
     }
 
     public double getTemp() {
+        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
+            return DataListener.getSensorData().getTemperature();
+        }
         return temp;
     }
 
@@ -118,10 +114,16 @@ public class WeatherContainer {
     }
 
     public double getPressure() {
+        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
+            return DataListener.getSensorData().getPressure();
+        }
         return pressure;
     }
 
     public double getHumidity() {
+        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
+            return DataListener.getSensorData().getHumidity();
+        }
         return humidity;
     }
 
@@ -141,12 +143,10 @@ public class WeatherContainer {
         return "";
     }
 
-    public boolean isSensorData() {
-        return sensorData;
-    }
-
-    private double round(double value, int decimalPoints) {
-        double d = Math.pow(10, decimalPoints);
-        return Math.round(value * d) / d;
+    public Date getDate() {
+        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
+            return DataListener.getSensorData().getDate();
+        }
+        return date;
     }
 }

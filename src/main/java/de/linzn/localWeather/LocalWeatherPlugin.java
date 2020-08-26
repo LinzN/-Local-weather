@@ -12,7 +12,6 @@
 package de.linzn.localWeather;
 
 
-
 import de.linzn.localWeather.callbacks.SensorCallback;
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
