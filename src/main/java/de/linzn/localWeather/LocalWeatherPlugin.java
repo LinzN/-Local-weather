@@ -16,6 +16,8 @@ import de.linzn.localWeather.callbacks.SensorCallback;
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
 import de.linzn.localWeather.engine.WeatherContainer;
+import de.linzn.localWeather.restfulapi.GET_Weather;
+import de.linzn.restfulapi.RestFulApiPlugin;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
 
@@ -39,6 +41,7 @@ public class LocalWeatherPlugin extends STEMPlugin {
         STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
         STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(new SensorCallback(), this);
         STEMSystemApp.getInstance().getZSocketModule().getzServer().registerEvents(new DataListener());
+        RestFulApiPlugin.restFulApiPlugin.registerIGetJSONClass(new GET_Weather(this));
     }
 
     @Override
