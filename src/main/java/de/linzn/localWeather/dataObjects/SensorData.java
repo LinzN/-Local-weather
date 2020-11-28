@@ -17,6 +17,15 @@ import org.json.JSONObject;
 import java.util.Date;
 
 public class SensorData {
+    private static SensorData sensorData;
+
+    public static SensorData getLastSensorData() {
+        return sensorData;
+    }
+
+    public static void setLastSensorData(SensorData data){
+        sensorData = data;
+    }
 
     private static final int upToDateMinutes = 10;
 

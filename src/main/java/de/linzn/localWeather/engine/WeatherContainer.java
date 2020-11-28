@@ -12,6 +12,7 @@
 package de.linzn.localWeather.engine;
 
 import de.linzn.localWeather.DataListener;
+import de.linzn.localWeather.dataObjects.SensorData;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -84,8 +85,8 @@ public class WeatherContainer {
     }
 
     public String getLocation() {
-        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
-            return DataListener.getSensorData().getLocation();
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getLocation();
         }
         return location;
     }
@@ -99,8 +100,8 @@ public class WeatherContainer {
     }
 
     public double getTemp() {
-        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
-            return DataListener.getSensorData().getTemperature();
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getTemperature();
         }
         return temp;
     }
@@ -114,15 +115,15 @@ public class WeatherContainer {
     }
 
     public double getPressure() {
-        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
-            return DataListener.getSensorData().getPressure();
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getPressure();
         }
         return pressure;
     }
 
     public double getHumidity() {
-        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
-            return DataListener.getSensorData().getHumidity();
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getHumidity();
         }
         return humidity;
     }
@@ -144,8 +145,8 @@ public class WeatherContainer {
     }
 
     public Date getDate() {
-        if (DataListener.getSensorData() != null && DataListener.getSensorData().isUpToDate()) {
-            return DataListener.getSensorData().getDate();
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getDate();
         }
         return date;
     }

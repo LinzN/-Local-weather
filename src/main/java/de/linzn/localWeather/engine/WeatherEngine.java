@@ -32,7 +32,7 @@ public class WeatherEngine {
         return new WeatherContainer(jsonObject);
     }
 
-    private static JSONObject readJsonFromUrl(String url) throws JSONException {
+    public static JSONObject readJsonFromUrl(String url) throws JSONException {
         try {
             URLConnection con = new URL(url).openConnection();
 

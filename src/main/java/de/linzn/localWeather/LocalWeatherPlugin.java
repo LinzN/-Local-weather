@@ -12,6 +12,7 @@
 package de.linzn.localWeather;
 
 
+import de.linzn.localWeather.callbacks.ESPSensorCallback;
 import de.linzn.localWeather.callbacks.SensorCallback;
 import de.linzn.localWeather.data.WeatherCallback;
 import de.linzn.localWeather.data.WeatherCommand;
@@ -36,11 +37,17 @@ public class LocalWeatherPlugin extends STEMPlugin {
     public void onEnable() {
         this.getDefaultConfig().get("weather.apiKey", "xxxxxxxxxxxxxxxxx");
         this.getDefaultConfig().get("weather.defaultLocation", "Blieskastel");
+        this.getDefaultConfig().get("espMCU.sensor.use", false);
+        this.getDefaultConfig().get("espMCU.sensor.address", "10.40.0.52");
         this.getDefaultConfig().save();
         STEMSystemApp.getInstance().getCommandModule().registerCommand("weather", new WeatherCommand());
         STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(weatherCallback, this);
-        STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(new SensorCallback(), this);
-        STEMSystemApp.getInstance().getZSocketModule().getzServer().registerEvents(new DataListener());
+        if (this.getDefaultConfig().getBoolean("espMCU.sensor.use")) {
+            STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(new ESPSensorCallback(), this);
+        } else {
+            STEMSystemApp.getInstance().getCallBackService().registerCallbackListener(new SensorCallback(), this);
+            STEMSystemApp.getInstance().getZSocketModule().getzServer().registerEvents(new DataListener());
+        }
         RestFulApiPlugin.restFulApiPlugin.registerIGetJSONClass(new GET_Weather(this));
     }
 
