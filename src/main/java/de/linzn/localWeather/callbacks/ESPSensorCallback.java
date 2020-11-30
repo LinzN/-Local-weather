@@ -34,11 +34,11 @@ public class ESPSensorCallback extends AbstractCallback {
     public void callback(OperationOutput operationOutput) {
         JSONObject jsonObject = (JSONObject) operationOutput.getData();
         if(operationOutput.getExit() == 0){
-            STEMSystemApp.LOGGER.DEBUG("Get ESP sensor data: " + jsonObject + " exit " + operationOutput.getExit());
+            STEMSystemApp.LOGGER.DEBUG("Get ESP sensor GET-data: " + jsonObject + " exit " + operationOutput.getExit());
             SensorData sensorData = new SensorData(jsonObject);
             SensorData.setLastSensorData(sensorData);
         } else {
-            STEMSystemApp.LOGGER.ERROR("ESP sensor data error! Request end with exit " + operationOutput.getExit());
+            STEMSystemApp.LOGGER.ERROR("ESP sensor GET-data error! Request end with exit " + operationOutput.getExit());
         }
     }
 

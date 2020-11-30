@@ -11,7 +11,6 @@
 
 package de.linzn.localWeather.engine;
 
-import de.linzn.localWeather.DataListener;
 import de.linzn.localWeather.dataObjects.SensorData;
 import org.json.JSONObject;
 
