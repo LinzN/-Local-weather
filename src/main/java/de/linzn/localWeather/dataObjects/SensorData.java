@@ -17,24 +17,13 @@ import org.json.JSONObject;
 import java.util.Date;
 
 public class SensorData {
-    private static SensorData sensorData;
-
-    public static SensorData getLastSensorData() {
-        return sensorData;
-    }
-
-    public static void setLastSensorData(SensorData data){
-        sensorData = data;
-    }
-
     private static final int upToDateMinutes = 10;
-
+    private static SensorData sensorData;
     private Date date;
     private double temperature;
     private double pressure;
     private double humidity;
     private String location;
-
 
     public SensorData(JSONObject jsonObject) {
         this.date = new Date();
@@ -42,6 +31,14 @@ public class SensorData {
         this.pressure = round(jsonObject.getDouble("pressure"), 2);
         this.humidity = round(jsonObject.getDouble("humidity"), 2);
         this.location = "Wetterstation";
+    }
+
+    public static SensorData getLastSensorData() {
+        return sensorData;
+    }
+
+    public static void setLastSensorData(SensorData data) {
+        sensorData = data;
     }
 
     public Date getDate() {
@@ -67,6 +64,11 @@ public class SensorData {
 
     public boolean isUpToDate() {
         return new Date().getTime() <= this.date.getTime() + (upToDateMinutes * 60 * 1000);
+    }
+
+    public long getSecondsSinceSync() {
+        long range = new Date().getTime() - this.date.getTime();
+        return range / 1000;
     }
 
     public String getLocation() {

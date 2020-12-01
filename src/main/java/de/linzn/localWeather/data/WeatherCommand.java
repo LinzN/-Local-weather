@@ -13,9 +13,11 @@ package de.linzn.localWeather.data;
 
 
 import de.linzn.localWeather.LocalWeatherPlugin;
+import de.linzn.localWeather.dataObjects.SensorData;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.engine.WeatherEngine;
 import de.stem.stemSystem.AppLogger;
+import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.commandModule.ICommand;
 
 public class WeatherCommand implements ICommand {
@@ -25,10 +27,15 @@ public class WeatherCommand implements ICommand {
             String location = strings[0];
             String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
             WeatherContainer weatherContainer = new WeatherEngine(key).getWeather(location);
-
-            AppLogger.logger(weatherContainer.printData(), false);
+            STEMSystemApp.LOGGER.LIVE(weatherContainer.printData());
         } else {
-            AppLogger.logger("No location given", false);
+            if(SensorData.getLastSensorData() != null){
+                long s = SensorData.getLastSensorData().getSecondsSinceSync();
+                STEMSystemApp.LOGGER.LIVE("Last sync from esp sensor: ");
+                STEMSystemApp.LOGGER.LIVE(s + " seconds ago!");
+            } else {
+                STEMSystemApp.LOGGER.LIVE("No data since last stem restart!");
+            }
         }
 
         return true;
