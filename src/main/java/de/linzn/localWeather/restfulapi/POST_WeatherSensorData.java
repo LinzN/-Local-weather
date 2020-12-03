@@ -13,18 +13,19 @@ package de.linzn.localWeather.restfulapi;
 
 
 import de.linzn.localWeather.dataObjects.SensorData;
-import de.linzn.restfulapi.api.jsonapi.post.IPostJSON;
+import de.linzn.restfulapi.api.jsonapi.IRequest;
+import de.linzn.restfulapi.api.jsonapi.RequestData;
 import de.stem.stemSystem.STEMSystemApp;
 import org.json.JSONObject;
 
 import java.util.List;
 
-public class POST_WeatherSensorData implements IPostJSON {
+public class POST_WeatherSensorData implements IRequest {
 
     @Override
-    public Object postDataRequest(List<String> list) {
+    public Object proceedRequestData(RequestData requestData) {
         JSONObject jsonObject = new JSONObject();
-        String post_data = list.get(1);
+        String post_data = requestData.getSubChannels().get(0);
 
         for (String data : post_data.split("&")) {
             String name = data.split("=")[0];

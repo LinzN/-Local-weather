@@ -13,12 +13,13 @@ package de.linzn.localWeather.restfulapi;
 
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.restfulapi.api.jsonapi.get.IGetJSON;
+import de.linzn.restfulapi.api.jsonapi.IRequest;
+import de.linzn.restfulapi.api.jsonapi.RequestData;
 import org.json.JSONObject;
 
 import java.util.List;
 
-public class GET_Weather implements IGetJSON {
+public class GET_Weather implements IRequest {
 
     private LocalWeatherPlugin localWeatherPlugin;
 
@@ -27,7 +28,7 @@ public class GET_Weather implements IGetJSON {
     }
 
     @Override
-    public Object getRequestData(List<String> inputList) {
+    public Object proceedRequestData(RequestData requestData)  {
 
         int weatherID = -1;
         String description = "N.A";
@@ -67,8 +68,8 @@ public class GET_Weather implements IGetJSON {
     }
 
     @Override
-    public Object getGenericData() {
-        return getRequestData(null);
+    public Object genericData() {
+        return proceedRequestData(null);
     }
 
     @Override
