@@ -15,7 +15,7 @@ package de.linzn.localWeather.data;
 import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.engine.WeatherEngine;
-import de.stem.stemSystem.AppLogger;
+import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.taskManagment.AbstractCallback;
 import de.stem.stemSystem.taskManagment.CallbackTime;
 import de.stem.stemSystem.taskManagment.operations.OperationOutput;
@@ -41,7 +41,7 @@ public class WeatherCallback extends AbstractCallback {
     public void callback(OperationOutput operationOutput) {
         JSONObject weatherObject = (JSONObject) operationOutput.getData();
         weatherContainer = WeatherEngine.getWeatherByJSON(weatherObject);
-        AppLogger.debug(Color.GREEN + "Weather pull complete");
+        STEMSystemApp.LOGGER.INFO("Weather pull complete");
     }
 
     @Override
