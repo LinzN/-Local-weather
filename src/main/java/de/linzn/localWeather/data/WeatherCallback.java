@@ -41,7 +41,7 @@ public class WeatherCallback extends AbstractCallback {
     public void callback(OperationOutput operationOutput) {
         JSONObject weatherObject = (JSONObject) operationOutput.getData();
         weatherContainer = WeatherEngine.getWeatherByJSON(weatherObject);
-        STEMSystemApp.LOGGER.INFO("Weather pull complete");
+        STEMSystemApp.LOGGER.DEBUG("Weather pull complete");
     }
 
     @Override
