@@ -16,6 +16,7 @@ import de.linzn.localWeather.engine.ForeCastDay;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.restfulapi.api.jsonapi.IRequest;
 import de.linzn.restfulapi.api.jsonapi.RequestData;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class GET_Weather implements IRequest {
             if (weatherContainer.hasForecast()) {
                 forecast = new JSONObject();
                 forecast.put("cnt", weatherContainer.getForecast().getCnt());
-                JSONObject days = new JSONObject();
+                JSONArray days = new JSONArray();
                 for (int i = 0; i < weatherContainer.getForecast().getCnt(); i++) {
                     ForeCastDay foreCastDay = weatherContainer.getForecast().getForecast(i);
                     JSONObject day = new JSONObject();
@@ -69,7 +70,7 @@ public class GET_Weather implements IRequest {
                     day.put("main", foreCastDay.getMain());
                     day.put("date", foreCastDay.getDate());
                     day.put("dayText", new SimpleDateFormat("EEEEE", Locale.GERMAN).format(foreCastDay.getDate()));
-                    days.put("" + i, day);
+                    days.put(day);
                 }
                 forecast.put("forecasts", days);
 
