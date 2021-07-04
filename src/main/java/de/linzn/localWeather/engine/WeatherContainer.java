@@ -18,51 +18,86 @@ import java.util.Date;
 
 public class WeatherContainer {
 
-    private String location;
-    private Date date;
+    private final Date date;
 
-    private String weatherDescription;
-    private String weatherMain;
+    private final JSONObject jsonObject;
 
-    private double temp;
-    private double temp_min;
-    private double temp_max;
-    private double pressure;
-    private double humidity;
-
-    private double wind_speed;
-
-    private double clouds;
-
-    private int weatherIcon;
+    private ForecastContainer forecastContainer;
 
 
     public WeatherContainer(JSONObject jsonObject) {
-        distribute(jsonObject);
+        this.date = new Date();
+        this.jsonObject = jsonObject;
     }
 
-    private void distribute(JSONObject jsonObject) {
-        location = jsonObject.getString("name");
-        date = new Date();
+    public ForecastContainer getForecast() {
+        return forecastContainer;
+    }
 
-        JSONObject weatherObject = jsonObject.getJSONArray("weather").getJSONObject(0);
-        weatherDescription = weatherObject.getString("description");
-        weatherMain = weatherObject.getString("main");
+    public void setForecast(JSONObject jsonObject) {
+        forecastContainer = new ForecastContainer(jsonObject);
+    }
 
-        JSONObject mainObject = jsonObject.getJSONObject("main");
-        temp_min = mainObject.getDouble("temp_min");
-        temp_max = mainObject.getDouble("temp_max");
-        temp = mainObject.getDouble("temp");
-        pressure = mainObject.getDouble("pressure");
-        humidity = mainObject.getDouble("humidity");
+    public boolean hasForecast() {
+        return forecastContainer != null;
+    }
 
 
-        JSONObject windObject = jsonObject.getJSONObject("wind");
-        wind_speed = windObject.getDouble("speed");
+    public String getLocation() {
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getLocation();
+        }
+        return jsonObject.getString("name");
+    }
 
-        JSONObject cloudsObject = jsonObject.getJSONObject("clouds");
-        clouds = cloudsObject.getDouble("all");
+    public String getWeatherDescription() {
+        return jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
+    }
 
+    public String getWeatherMain() {
+        return jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
+    }
+
+    public double getTemp() {
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getTemperature();
+        }
+        return jsonObject.getJSONObject("main").getDouble("temp");
+    }
+
+    public double getTemp_min() {
+        return jsonObject.getJSONObject("main").getDouble("temp_min");
+    }
+
+    public double getTemp_max() {
+        return jsonObject.getJSONObject("main").getDouble("temp_max");
+    }
+
+    public double getPressure() {
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getPressure();
+        }
+        return jsonObject.getJSONObject("main").getDouble("pressure");
+    }
+
+    public double getHumidity() {
+        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
+            return SensorData.getLastSensorData().getHumidity();
+        }
+        return jsonObject.getJSONObject("main").getDouble("humidity");
+    }
+
+    public double getWind_speed() {
+        return jsonObject.getJSONObject("wind").getDouble("speed");
+    }
+
+    public double getClouds() {
+        return jsonObject.getJSONObject("clouds").getDouble("all");
+    }
+
+    public int getICON() {
+        String weatherMain = getWeatherMain();
+        int weatherIcon = -1;
         /* Weather icon */
         if (weatherMain.equalsIgnoreCase("clear")) {
             weatherIcon = 0;
@@ -81,61 +116,7 @@ public class WeatherContainer {
         } else if (weatherMain.equalsIgnoreCase("fog")) {
             weatherIcon = 6;
         }
-    }
 
-    public String getLocation() {
-        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
-            return SensorData.getLastSensorData().getLocation();
-        }
-        return location;
-    }
-
-    public String getWeatherDescription() {
-        return weatherDescription;
-    }
-
-    public String getWeatherMain() {
-        return weatherMain;
-    }
-
-    public double getTemp() {
-        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
-            return SensorData.getLastSensorData().getTemperature();
-        }
-        return temp;
-    }
-
-    public double getTemp_min() {
-        return temp_min;
-    }
-
-    public double getTemp_max() {
-        return temp_max;
-    }
-
-    public double getPressure() {
-        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
-            return SensorData.getLastSensorData().getPressure();
-        }
-        return pressure;
-    }
-
-    public double getHumidity() {
-        if (SensorData.getLastSensorData() != null && SensorData.getLastSensorData().isUpToDate()) {
-            return SensorData.getLastSensorData().getHumidity();
-        }
-        return humidity;
-    }
-
-    public double getWind_speed() {
-        return wind_speed;
-    }
-
-    public double getClouds() {
-        return clouds;
-    }
-
-    public int getICON() {
         return weatherIcon;
     }
 

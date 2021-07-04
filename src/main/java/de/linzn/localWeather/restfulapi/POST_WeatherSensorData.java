@@ -18,8 +18,6 @@ import de.linzn.restfulapi.api.jsonapi.RequestData;
 import de.stem.stemSystem.STEMSystemApp;
 import org.json.JSONObject;
 
-import java.util.List;
-
 public class POST_WeatherSensorData implements IRequest {
 
     @Override

@@ -25,7 +25,7 @@ public class ESPSensorRequestOperation extends AbstractOperation {
     public OperationOutput runOperation() {
         OperationOutput operationOutput = new OperationOutput(this);
         JSONObject jsonObject = WeatherEngine.readJsonFromUrl("http://" + LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("espMCU.sensor.address"));
-        if(jsonObject != null){
+        if (jsonObject != null) {
             operationOutput.setData(jsonObject);
             operationOutput.setExit(0);
         } else {

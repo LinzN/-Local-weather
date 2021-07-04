@@ -11,6 +11,7 @@
 
 package de.linzn.localWeather.engine;
 
+import de.stem.stemSystem.STEMSystemApp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +41,8 @@ public class WeatherEngine {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
             return new JSONObject(jsonText);
-        } catch (Exception ignored) {
+        } catch (Exception exception) {
+            STEMSystemApp.LOGGER.ERROR(exception);
         }
         return null;
     }
@@ -54,12 +56,17 @@ public class WeatherEngine {
         return sb.toString();
     }
 
-    public WeatherContainer getWeather(String location) {
+    public WeatherContainer getCurrentWeather(String location) {
         return new WeatherContainer(parseWeather(location));
     }
 
     public JSONObject parseWeather(String location) {
-        String apiLink = "http://api.openweathermap.org/data/2.5/weather?q=" + location + ",de&appid=" + this.apiKey + "&lang=de&units=metric";
+        String apiLink = "https://api.openweathermap.org/data/2.5/weather?q=" + location + ",de&appid=" + this.apiKey + "&lang=de&units=metric";
+        return readJsonFromUrl(apiLink);
+    }
+
+    public JSONObject parseForecastWeather(String location, int forecastDays) {
+        String apiLink = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + location + ",de&cnt=" + forecastDays + "&appid=" + this.apiKey + "&lang=de&units=metric";
         return readJsonFromUrl(apiLink);
     }
 

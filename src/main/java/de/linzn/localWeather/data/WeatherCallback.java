@@ -39,7 +39,10 @@ public class WeatherCallback extends AbstractCallback {
     @Override
     public void callback(OperationOutput operationOutput) {
         JSONObject weatherObject = (JSONObject) operationOutput.getData();
-        weatherContainer = WeatherEngine.getWeatherByJSON(weatherObject);
+        JSONObject weatherCurrent = weatherObject.getJSONObject("current");
+        JSONObject weatherForecast = weatherObject.getJSONObject("forecast");
+        weatherContainer = WeatherEngine.getWeatherByJSON(weatherCurrent);
+        weatherContainer.setForecast(weatherForecast);
         STEMSystemApp.LOGGER.DEBUG("Weather pull complete");
     }
 

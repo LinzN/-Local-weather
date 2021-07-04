@@ -25,10 +25,10 @@ public class WeatherCommand implements ICommand {
         if (strings.length >= 1) {
             String location = strings[0];
             String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
-            WeatherContainer weatherContainer = new WeatherEngine(key).getWeather(location);
+            WeatherContainer weatherContainer = new WeatherEngine(key).getCurrentWeather(location);
             STEMSystemApp.LOGGER.LIVE(weatherContainer.printData());
         } else {
-            if(SensorData.getLastSensorData() != null){
+            if (SensorData.getLastSensorData() != null) {
                 long s = SensorData.getLastSensorData().getSecondsSinceSync();
                 STEMSystemApp.LOGGER.LIVE("Last sync from esp sensor: ");
                 STEMSystemApp.LOGGER.LIVE(s + " seconds ago!");

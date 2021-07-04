@@ -16,6 +16,7 @@ import de.linzn.localWeather.LocalWeatherPlugin;
 import de.linzn.localWeather.engine.WeatherEngine;
 import de.stem.stemSystem.taskManagment.operations.AbstractOperation;
 import de.stem.stemSystem.taskManagment.operations.OperationOutput;
+import org.json.JSONObject;
 
 public class WeatherOperation extends AbstractOperation {
     private String location;
@@ -24,7 +25,10 @@ public class WeatherOperation extends AbstractOperation {
     public OperationOutput runOperation() {
         OperationOutput operationOutput = new OperationOutput(this);
         String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
-        operationOutput.setData(new WeatherEngine(key).parseWeather(location));
+        JSONObject weatherData = new JSONObject();
+        weatherData.put("current", new WeatherEngine(key).parseWeather(location));
+        weatherData.put("forecast", new WeatherEngine(key).parseForecastWeather(location, 5));
+        operationOutput.setData(weatherData);
         operationOutput.setExit(0);
         return operationOutput;
     }

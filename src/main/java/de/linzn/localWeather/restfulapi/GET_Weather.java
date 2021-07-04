@@ -12,12 +12,14 @@
 package de.linzn.localWeather.restfulapi;
 
 import de.linzn.localWeather.LocalWeatherPlugin;
+import de.linzn.localWeather.engine.ForeCastDay;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.restfulapi.api.jsonapi.IRequest;
 import de.linzn.restfulapi.api.jsonapi.RequestData;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class GET_Weather implements IRequest {
 
@@ -28,7 +30,7 @@ public class GET_Weather implements IRequest {
     }
 
     @Override
-    public Object proceedRequestData(RequestData requestData)  {
+    public Object proceedRequestData(RequestData requestData) {
 
         int weatherID = -1;
         String description = "N.A";
@@ -38,10 +40,10 @@ public class GET_Weather implements IRequest {
         String location = "None";
         double humidity = 0;
         double pressure = 0;
+        JSONObject forecast = null;
 
 
         WeatherContainer weatherContainer = this.localWeatherPlugin.getWeatherData();
-
         if (weatherContainer != null) {
             weatherID = weatherContainer.getICON();
             description = weatherContainer.getWeatherDescription();
@@ -51,6 +53,24 @@ public class GET_Weather implements IRequest {
             location = weatherContainer.getLocation();
             pressure = weatherContainer.getPressure();
             humidity = weatherContainer.getHumidity();
+
+            if (weatherContainer.hasForecast()) {
+                forecast = new JSONObject();
+                forecast.put("cnt", weatherContainer.getForecast().getCnt());
+                JSONObject days = new JSONObject();
+                for (int i = 0; i < weatherContainer.getForecast().getCnt(); i++) {
+                    ForeCastDay foreCastDay = weatherContainer.getForecast().getForecast(i);
+                    JSONObject day = new JSONObject();
+                    day.put("maxTemp", foreCastDay.getMaxTemp());
+                    day.put("minTemp", foreCastDay.getMinTemp());
+                    day.put("description", foreCastDay.getDescription());
+                    day.put("date", foreCastDay.getDate());
+                    day.put("dayText", new SimpleDateFormat("EEEEE", Locale.GERMAN).format(foreCastDay.getDate()));
+                    days.put("" + i, day);
+                }
+                forecast.put("forecasts", days);
+
+            }
         }
 
         JSONObject jsonObject = new JSONObject();
@@ -63,6 +83,11 @@ public class GET_Weather implements IRequest {
         jsonObject.put("location", location);
         jsonObject.put("pressure", pressure);
         jsonObject.put("humidity", humidity);
+
+        if (forecast != null) {
+            jsonObject.put("forecast", forecast);
+        }
+
 
         return jsonObject;
     }
