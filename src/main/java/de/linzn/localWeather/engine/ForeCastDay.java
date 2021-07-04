@@ -30,10 +30,6 @@ public class ForeCastDay {
         return data.getJSONObject("temp").getDouble("max");
     }
 
-    public double getAverageTemp() {
-        return data.getJSONObject("temp").getDouble("day");
-    }
-
     public Date getDate() {
         return new Date(data.getLong("dt") * 1000);
     }
@@ -42,7 +38,15 @@ public class ForeCastDay {
         return data.getJSONArray("weather").getJSONObject(0).getString("description");
     }
 
+    public String getMain() {
+        return data.getJSONArray("weather").getJSONObject(0).getString("main");
+    }
+
     public double getClouds() {
         return data.getDouble("clouds");
+    }
+
+    public double getSpeed() {
+        return data.getDouble("speed");
     }
 }

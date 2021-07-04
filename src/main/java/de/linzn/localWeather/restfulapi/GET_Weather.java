@@ -63,7 +63,10 @@ public class GET_Weather implements IRequest {
                     JSONObject day = new JSONObject();
                     day.put("maxTemp", foreCastDay.getMaxTemp());
                     day.put("minTemp", foreCastDay.getMinTemp());
+                    day.put("speed", foreCastDay.getSpeed());
+                    day.put("clouds", foreCastDay.getClouds());
                     day.put("description", foreCastDay.getDescription());
+                    day.put("main", foreCastDay.getMain());
                     day.put("date", foreCastDay.getDate());
                     day.put("dayText", new SimpleDateFormat("EEEEE", Locale.GERMAN).format(foreCastDay.getDate()));
                     days.put("" + i, day);
