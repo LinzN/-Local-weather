@@ -58,6 +58,7 @@ public class GET_Weather implements IRequest {
             if (weatherContainer.hasForecast()) {
                 forecast = new JSONObject();
                 forecast.put("cnt", weatherContainer.getForecast().getCnt());
+                forecast.put("location", weatherContainer.getForecast().getLocation());
                 JSONArray days = new JSONArray();
                 for (int i = 0; i < weatherContainer.getForecast().getCnt(); i++) {
                     ForeCastDay foreCastDay = weatherContainer.getForecast().getForecast(i);
