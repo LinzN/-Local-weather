@@ -18,6 +18,7 @@ import de.linzn.localWeather.data.WeatherCommand;
 import de.linzn.localWeather.engine.WeatherContainer;
 import de.linzn.localWeather.restfulapi.GET_Weather;
 import de.linzn.localWeather.restfulapi.POST_WeatherSensorData;
+import de.linzn.localWeather.webapi.WebApiHandler;
 import de.linzn.restfulapi.RestFulApiPlugin;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
@@ -27,6 +28,7 @@ public class LocalWeatherPlugin extends STEMPlugin {
 
     public static LocalWeatherPlugin localWeatherPlugin;
     private WeatherCallback weatherCallback;
+    private WebApiHandler webApiHandler;
 
     public LocalWeatherPlugin() {
         localWeatherPlugin = this;
@@ -47,6 +49,7 @@ public class LocalWeatherPlugin extends STEMPlugin {
         }
         RestFulApiPlugin.restFulApiPlugin.registerIGetJSONClass(new GET_Weather(this));
         RestFulApiPlugin.restFulApiPlugin.registerIPostJSONClass(new POST_WeatherSensorData());
+        this.webApiHandler = new WebApiHandler(this);
     }
 
     @Override
