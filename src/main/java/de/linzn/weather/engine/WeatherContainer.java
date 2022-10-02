@@ -9,9 +9,9 @@
  *
  */
 
-package de.linzn.localWeather.engine;
+package de.linzn.weather.engine;
 
-import de.linzn.localWeather.dataObjects.SensorData;
+import de.linzn.weather.dataObjects.SensorData;
 import org.json.JSONObject;
 
 import java.util.Date;

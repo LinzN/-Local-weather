@@ -9,13 +9,13 @@
  *
  */
 
-package de.linzn.localWeather.data;
+package de.linzn.weather.data;
 
 
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.dataObjects.SensorData;
-import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.localWeather.engine.WeatherEngine;
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.dataObjects.SensorData;
+import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.weather.engine.WeatherEngine;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.commandModule.ICommand;
 
@@ -24,7 +24,7 @@ public class WeatherCommand implements ICommand {
     public boolean executeTerminal(String[] strings) {
         if (strings.length >= 1) {
             String location = strings[0];
-            String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
+            String key = WeatherPlugin.weatherPlugin.getDefaultConfig().getString("weather.apiKey");
             WeatherContainer weatherContainer = new WeatherEngine(key).getCurrentWeather(location);
             STEMSystemApp.LOGGER.LIVE(weatherContainer.printData());
         } else {

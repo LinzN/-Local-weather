@@ -9,11 +9,11 @@
  *
  */
 
-package de.linzn.localWeather.data;
+package de.linzn.weather.data;
 
 
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.engine.WeatherEngine;
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.engine.WeatherEngine;
 import de.stem.stemSystem.taskManagment.operations.AbstractOperation;
 import de.stem.stemSystem.taskManagment.operations.OperationOutput;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class WeatherOperation extends AbstractOperation {
     @Override
     public OperationOutput runOperation() {
         OperationOutput operationOutput = new OperationOutput(this);
-        String key = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.apiKey");
+        String key = WeatherPlugin.weatherPlugin.getDefaultConfig().getString("weather.apiKey");
         JSONObject weatherData = new JSONObject();
         weatherData.put("current", new WeatherEngine(key).parseWeather(location));
         weatherData.put("forecast", new WeatherEngine(key).parseForecastWeather(location, 5));

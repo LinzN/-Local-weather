@@ -9,7 +9,7 @@
  *
  */
 
-package de.linzn.localWeather.engine;
+package de.linzn.weather.engine;
 
 import org.json.JSONObject;
 

@@ -9,29 +9,29 @@
  *
  */
 
-package de.linzn.localWeather;
+package de.linzn.weather;
 
 
-import de.linzn.localWeather.callbacks.ESPSensorCallback;
-import de.linzn.localWeather.data.WeatherCallback;
-import de.linzn.localWeather.data.WeatherCommand;
-import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.localWeather.restfulapi.GET_Weather;
-import de.linzn.localWeather.restfulapi.POST_WeatherSensorData;
-import de.linzn.localWeather.webapi.WebApiHandler;
+import de.linzn.weather.callbacks.ESPSensorCallback;
+import de.linzn.weather.data.WeatherCallback;
+import de.linzn.weather.data.WeatherCommand;
+import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.weather.restfulapi.GET_Weather;
+import de.linzn.weather.restfulapi.POST_WeatherSensorData;
+import de.linzn.weather.webapi.WebApiHandler;
 import de.linzn.restfulapi.RestFulApiPlugin;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
 
 
-public class LocalWeatherPlugin extends STEMPlugin {
+public class WeatherPlugin extends STEMPlugin {
 
-    public static LocalWeatherPlugin localWeatherPlugin;
+    public static WeatherPlugin weatherPlugin;
     private WeatherCallback weatherCallback;
     private WebApiHandler webApiHandler;
 
-    public LocalWeatherPlugin() {
-        localWeatherPlugin = this;
+    public WeatherPlugin() {
+        weatherPlugin = this;
         weatherCallback = new WeatherCallback();
     }
 

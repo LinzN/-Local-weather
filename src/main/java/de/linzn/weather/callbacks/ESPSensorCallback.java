@@ -9,9 +9,9 @@
  *
  */
 
-package de.linzn.localWeather.callbacks;
+package de.linzn.weather.callbacks;
 
-import de.linzn.localWeather.dataObjects.SensorData;
+import de.linzn.weather.dataObjects.SensorData;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.taskManagment.AbstractCallback;
 import de.stem.stemSystem.taskManagment.CallbackTime;

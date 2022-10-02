@@ -9,7 +9,7 @@
  *
  */
 
-package de.linzn.localWeather.engine;
+package de.linzn.weather.engine;
 
 import de.stem.stemSystem.STEMSystemApp;
 import org.json.JSONException;

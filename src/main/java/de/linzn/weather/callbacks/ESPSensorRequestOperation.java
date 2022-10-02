@@ -9,11 +9,11 @@
  *
  */
 
-package de.linzn.localWeather.callbacks;
+package de.linzn.weather.callbacks;
 
 
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.engine.WeatherEngine;
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.engine.WeatherEngine;
 import de.stem.stemSystem.taskManagment.operations.AbstractOperation;
 import de.stem.stemSystem.taskManagment.operations.OperationOutput;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class ESPSensorRequestOperation extends AbstractOperation {
     @Override
     public OperationOutput runOperation() {
         OperationOutput operationOutput = new OperationOutput(this);
-        JSONObject jsonObject = WeatherEngine.readJsonFromUrl("http://" + LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("espMCU.sensor.address"));
+        JSONObject jsonObject = WeatherEngine.readJsonFromUrl("http://" + WeatherPlugin.weatherPlugin.getDefaultConfig().getString("espMCU.sensor.address"));
         if (jsonObject != null) {
             operationOutput.setData(jsonObject);
             operationOutput.setExit(0);

@@ -1,37 +1,22 @@
-/*
- * Copyright (C) 2020. Niklas Linz - All Rights Reserved
- * You may use, distribute and modify this code under the
- * terms of the LGPLv3 license, which unfortunately won't be
- * written for another century.
- *
- * You should have received a copy of the LGPLv3 license with
- * this file. If not, please write to: niklas.linz@enigmar.de
- *
- */
+package de.linzn.weather.webapi;
 
-package de.linzn.localWeather.restfulapi;
-
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.engine.ForeCastDay;
-import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.restfulapi.api.jsonapi.IRequest;
-import de.linzn.restfulapi.api.jsonapi.RequestData;
+import com.sun.net.httpserver.HttpExchange;
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.engine.ForeCastDay;
+import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.webapi.core.HttpRequestClientPayload;
+import de.linzn.webapi.modules.RequestInterface;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class GET_Weather implements IRequest {
-
-    private LocalWeatherPlugin localWeatherPlugin;
-
-    public GET_Weather(LocalWeatherPlugin localWeatherPlugin) {
-        this.localWeatherPlugin = localWeatherPlugin;
-    }
-
+public class WeatherWebApi extends RequestInterface {
     @Override
-    public Object proceedRequestData(RequestData requestData) {
+    public Object callHttpEvent(HttpExchange httpExchange, HttpRequestClientPayload httpRequestClientPayload) throws IOException {
+        JSONObject jsonObject = new JSONObject();
 
         int weatherID = -1;
         String description = "N.A";
@@ -44,7 +29,7 @@ public class GET_Weather implements IRequest {
         JSONObject forecast = null;
 
 
-        WeatherContainer weatherContainer = this.localWeatherPlugin.getWeatherData();
+        WeatherContainer weatherContainer = WeatherPlugin.weatherPlugin.getWeatherData();
         if (weatherContainer != null) {
             weatherID = weatherContainer.getICON();
             description = weatherContainer.getWeatherDescription();
@@ -78,8 +63,6 @@ public class GET_Weather implements IRequest {
             }
         }
 
-        JSONObject jsonObject = new JSONObject();
-
         jsonObject.put("weatherID", weatherID);
         jsonObject.put("description", description);
         jsonObject.put("currentTemp", current);
@@ -93,17 +76,6 @@ public class GET_Weather implements IRequest {
             jsonObject.put("forecast", forecast);
         }
 
-
         return jsonObject;
-    }
-
-    @Override
-    public Object genericData() {
-        return proceedRequestData(null);
-    }
-
-    @Override
-    public String name() {
-        return "weather";
     }
 }

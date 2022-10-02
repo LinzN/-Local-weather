@@ -1,4 +1,4 @@
-main: de.linzn.localWeather.LocalWeatherPlugin
-name: local-weather
+main: de.linzn.weather.WeatherPlugin
+name: weather
 version: ${project.version}
 depend: [ restful-api, web-api ]

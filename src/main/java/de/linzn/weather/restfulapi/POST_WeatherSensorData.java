@@ -9,10 +9,10 @@
  *
  */
 
-package de.linzn.localWeather.restfulapi;
+package de.linzn.weather.restfulapi;
 
 
-import de.linzn.localWeather.dataObjects.SensorData;
+import de.linzn.weather.dataObjects.SensorData;
 import de.linzn.restfulapi.api.jsonapi.IRequest;
 import de.linzn.restfulapi.api.jsonapi.RequestData;
 import de.stem.stemSystem.STEMSystemApp;

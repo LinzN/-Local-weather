@@ -9,12 +9,12 @@
  *
  */
 
-package de.linzn.localWeather.data;
+package de.linzn.weather.data;
 
 
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.localWeather.engine.WeatherEngine;
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.weather.engine.WeatherEngine;
 import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.taskManagment.AbstractCallback;
 import de.stem.stemSystem.taskManagment.CallbackTime;
@@ -29,7 +29,7 @@ public class WeatherCallback extends AbstractCallback {
 
     @Override
     public void operation() {
-        String location = LocalWeatherPlugin.localWeatherPlugin.getDefaultConfig().getString("weather.defaultLocation");
+        String location = WeatherPlugin.weatherPlugin.getDefaultConfig().getString("weather.defaultLocation");
         WeatherOperation weatherOperation = new WeatherOperation();
         weatherOperation.setLocation(location);
         addOperationData(weatherOperation);

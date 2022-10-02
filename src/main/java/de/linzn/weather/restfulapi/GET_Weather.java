@@ -1,22 +1,37 @@
-package de.linzn.localWeather.webapi;
+/*
+ * Copyright (C) 2020. Niklas Linz - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the LGPLv3 license, which unfortunately won't be
+ * written for another century.
+ *
+ * You should have received a copy of the LGPLv3 license with
+ * this file. If not, please write to: niklas.linz@enigmar.de
+ *
+ */
 
-import com.sun.net.httpserver.HttpExchange;
-import de.linzn.localWeather.LocalWeatherPlugin;
-import de.linzn.localWeather.engine.ForeCastDay;
-import de.linzn.localWeather.engine.WeatherContainer;
-import de.linzn.webapi.core.HttpRequestClientPayload;
-import de.linzn.webapi.modules.RequestInterface;
+package de.linzn.weather.restfulapi;
+
+import de.linzn.weather.WeatherPlugin;
+import de.linzn.weather.engine.ForeCastDay;
+import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.restfulapi.api.jsonapi.IRequest;
+import de.linzn.restfulapi.api.jsonapi.RequestData;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class WeatherWebApi extends RequestInterface {
+public class GET_Weather implements IRequest {
+
+    private WeatherPlugin weatherPlugin;
+
+    public GET_Weather(WeatherPlugin weatherPlugin) {
+        this.weatherPlugin = weatherPlugin;
+    }
+
     @Override
-    public Object callHttpEvent(HttpExchange httpExchange, HttpRequestClientPayload httpRequestClientPayload) throws IOException {
-        JSONObject jsonObject = new JSONObject();
+    public Object proceedRequestData(RequestData requestData) {
 
         int weatherID = -1;
         String description = "N.A";
@@ -29,7 +44,7 @@ public class WeatherWebApi extends RequestInterface {
         JSONObject forecast = null;
 
 
-        WeatherContainer weatherContainer = LocalWeatherPlugin.localWeatherPlugin.getWeatherData();
+        WeatherContainer weatherContainer = this.weatherPlugin.getWeatherData();
         if (weatherContainer != null) {
             weatherID = weatherContainer.getICON();
             description = weatherContainer.getWeatherDescription();
@@ -63,6 +78,8 @@ public class WeatherWebApi extends RequestInterface {
             }
         }
 
+        JSONObject jsonObject = new JSONObject();
+
         jsonObject.put("weatherID", weatherID);
         jsonObject.put("description", description);
         jsonObject.put("currentTemp", current);
@@ -76,6 +93,17 @@ public class WeatherWebApi extends RequestInterface {
             jsonObject.put("forecast", forecast);
         }
 
+
         return jsonObject;
+    }
+
+    @Override
+    public Object genericData() {
+        return proceedRequestData(null);
+    }
+
+    @Override
+    public String name() {
+        return "weather";
     }
 }

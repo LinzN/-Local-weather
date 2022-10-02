@@ -1,4 +1,4 @@
-package de.linzn.localWeather.webapi;
+package de.linzn.weather.webapi;
 
 import de.linzn.webapi.WebApiPlugin;
 import de.linzn.webapi.modules.WebModule;
