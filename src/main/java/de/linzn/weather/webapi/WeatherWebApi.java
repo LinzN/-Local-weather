@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import de.linzn.weather.WeatherPlugin;
 import de.linzn.weather.engine.ForeCastDay;
 import de.linzn.weather.engine.WeatherContainer;
+import de.linzn.webapi.core.ApiResponse;
 import de.linzn.webapi.core.HttpRequestClientPayload;
 import de.linzn.webapi.modules.RequestInterface;
 import org.json.JSONArray;
@@ -16,7 +17,7 @@ import java.util.Locale;
 public class WeatherWebApi extends RequestInterface {
     @Override
     public Object callHttpEvent(HttpExchange httpExchange, HttpRequestClientPayload httpRequestClientPayload) throws IOException {
-        JSONObject jsonObject = new JSONObject();
+        ApiResponse apiResponse = new ApiResponse();
 
         int weatherID = -1;
         String description = "N.A";
@@ -63,19 +64,19 @@ public class WeatherWebApi extends RequestInterface {
             }
         }
 
-        jsonObject.put("weatherID", weatherID);
-        jsonObject.put("description", description);
-        jsonObject.put("currentTemp", current);
-        jsonObject.put("minTemp", minTemp);
-        jsonObject.put("maxTemp", maxTemp);
-        jsonObject.put("location", location);
-        jsonObject.put("pressure", pressure);
-        jsonObject.put("humidity", humidity);
+        apiResponse.getJSONObject().put("weatherID", weatherID);
+        apiResponse.getJSONObject().put("description", description);
+        apiResponse.getJSONObject().put("currentTemp", current);
+        apiResponse.getJSONObject().put("minTemp", minTemp);
+        apiResponse.getJSONObject().put("maxTemp", maxTemp);
+        apiResponse.getJSONObject().put("location", location);
+        apiResponse.getJSONObject().put("pressure", pressure);
+        apiResponse.getJSONObject().put("humidity", humidity);
 
         if (forecast != null) {
-            jsonObject.put("forecast", forecast);
+            apiResponse.getJSONObject().put("forecast", forecast);
         }
 
-        return jsonObject;
+        return apiResponse.buildResponse();
     }
 }
